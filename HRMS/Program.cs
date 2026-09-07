@@ -25,7 +25,7 @@ namespace HRMS
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<HRMSContext>();
             var connectionString =
-              builder.Configuration.GetConnectionString("HRMSContext")
+              builder.Configuration.GetConnectionString("HRMSConnection")
               ?? throw new InvalidOperationException(
                   "Connection string 'HRMSContext' not found.");
 

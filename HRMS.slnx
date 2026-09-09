@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="HRMS.Tests/HRMS.Tests.csproj" Id="8f609667-7213-4004-8cf8-a5d7f2de261a" />
   <Project Path="HRMS/HRMS.csproj" />
 </Solution>

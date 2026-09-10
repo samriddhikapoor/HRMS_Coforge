@@ -1,10 +1,13 @@
+using AutoMapper;
 using HRMS.Data;
 using HRMS.Repositories.Implementations;
 using HRMS.Repositories.Interfaces;
+using HRMS.Services;
+using HRMS.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using HRMS.Services;
 
 namespace HRMS
 {
@@ -27,7 +30,7 @@ namespace HRMS
             var connectionString =
               builder.Configuration.GetConnectionString("HRMSConnection")
               ?? throw new InvalidOperationException(
-                  "Connection string 'HRMSContext' not found.");
+                  "Connection string 'HRMSConnection' not found.");
 
             builder.Services.AddDbContext<HRMSContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -39,7 +42,7 @@ namespace HRMS
             builder.Services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
             builder.Services.AddScoped<IPayrollRepository, PayrollRepository>();
             builder.Services.AddScoped<IPerformanceReviewRepository,PerformanceReviewRepository>();
-
+            builder.Services.AddScoped<IAIChatService, AIChatService>();
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();

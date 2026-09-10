@@ -1,3 +1,709 @@
+@* @{
+    ViewData["Title"] = "Workforce Hub - People. Process. Progress.";
+}
+
+<div class="landing-hero-wrapper">
+    <!-- Ambient Pastel Glowing Orbs -->
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+
+    <!-- =========================================================================
+         1. HERO SECTION (CHIC & CREATIVE EDITORIAL)
+         ========================================================================= -->
+    <section class="landing-hero">
+
+        <!-- LEFT COLUMN: EDITORIAL HEADLINE & VALUE PROPOSITION -->
+        <div class="hero-text-col">
+
+            <!-- Pill Badge with Pulsing Pink Dot -->
+            <div class="hero-pill-badge">
+                <span class="pulse-dot"></span>
+                <span>🌸 A Smarter, More Human Workplace</span>
+                <span style="opacity: 0.5;">·</span>
+                <span style="font-weight: 800;">2026 Edition ♡</span>
+            </div>
+
+            <!-- Chic Editorial Title -->
+            <h1 class="landing-title">
+                People.<br />
+                Process.<br />
+                <span class="text-gradient-chic">Progress.</span> <span class="sparkle-accent">✧</span>
+            </h1>
+
+            <p class="landing-lead">
+                Where corporate efficiency meets soft pastel serenity. Streamline employee journeys,
+                mindful attendance, joyful leaves, and transparent payroll — all within a warm,
+                beautiful digital sanctuary crafted for modern teams.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="landing-cta-group">
+                <a asp-area="Identity"
+                   asp-page="/Account/Register"
+                   class="btn-hrms-primary px-4 py-3 fs-6 d-inline-flex align-items-center gap-2 shadow-sm">
+                    <span>Get Started Free</span>
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+                <a href="#showcase"
+                   class="btn-hrms-outline px-4 py-3 fs-6 d-inline-flex align-items-center gap-2">
+                    <i class="bi bi-stars text-primary"></i>
+                    <span>Explore Portals</span>
+                </a>
+            </div>
+
+            <!-- Social Proof & Team Happiness Score -->
+            <div class="hero-social-proof">
+                <div class="chic-avatar-stack">
+                    <span class="chic-avatar-circle" style="background: #ffe4e6;">🌸</span>
+                    <span class="chic-avatar-circle" style="background: #f3e8ff;">🎀</span>
+                    <span class="chic-avatar-circle" style="background: #e0f2fe;">✨</span>
+                    <span class="chic-avatar-circle" style="background: #dcfce7;">🌷</span>
+                </div>
+                <div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="text-warning small">
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                            <i class="bi bi-star-fill"></i>
+                        </span>
+                        <span class="fw-bold small ms-1" style="color: var(--hrms-text-primary);">4.9/5 Employee Love</span>
+                    </div>
+                    <small class="text-muted" style="font-size: 12px;">Cherished by 1,200+ mindful professionals</small>
+                </div>
+            </div>
+
+            <!-- 5 Quick Feature Pills -->
+            <div class="hero-feature-bar">
+                <div class="hero-feature-pill">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Employee Hub</span>
+                </div>
+                <div class="hero-feature-pill">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Smart Attendance</span>
+                </div>
+                <div class="hero-feature-pill">
+                    <i class="bi bi-calendar-heart-fill"></i>
+                    <span>Joyful Leaves</span>
+                </div>
+                <div class="hero-feature-pill">
+                    <i class="bi bi-cash-stack"></i>
+                    <span>Clear Payroll</span>
+                </div>
+                <div class="hero-feature-pill">
+                    <i class="bi bi-award-fill"></i>
+                    <span>Growth Reviews</span>
+                </div>
+            </div>
+
+            <div class="mt-3">
+                <small class="text-muted fw-bold" style="letter-spacing: 2px; font-size: 11px;">
+                    BETTER PEOPLE · BRIGHTER TOMORROWS ♡
+                </small>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: MULTI-LAYERED FLOATING VISUAL SHOWCASE -->
+        <div class="hero-visual-col">
+
+            <!-- Floating Glass Card 1: Top Right Pulse -->
+            <div class="floating-glass-card floating-top-right">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="floating-icon-box" style="background: rgba(34, 197, 94, 0.12); color: #16a34a;">
+                        <i class="bi bi-emoji-smile-fill"></i>
+                    </div>
+                    <div>
+                        <div class="fw-bold small" style="color: var(--hrms-text-primary);">Team Pulse Today</div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="fw-bold" style="color: #16a34a; font-size: 13px;">99.2% Thriving</span>
+                            <span class="badge rounded-pill bg-success-subtle text-success small" style="font-size: 10px;">+4.8%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Central Hero Desk Image Card -->
+            <div class="hero-image-card">
+                <img src="~/images/aesthetic-desk.jpg"
+                     alt="Aesthetic Modern Workplace" />
+
+                <!-- Card Bottom Banner -->
+                <div class="hero-image-badge">
+                    <span>Work Grow Belong ♡</span>
+                    <small class="text-muted">Empowering your every workday</small>
+                </div>
+            </div>
+
+            <!-- Floating Glass Card 2: Bottom Left Attendance Stamp -->
+            <div class="floating-glass-card floating-bottom-left">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="floating-icon-box" style="background: rgba(193, 91, 128, 0.12); color: var(--hrms-primary);">
+                        <i class="bi bi-cup-hot-fill"></i>
+                    </div>
+                    <div>
+                        <div class="fw-bold small" style="color: var(--hrms-text-primary);">Morning Check-In</div>
+                        <small class="text-muted" style="font-size: 11px;">
+                            <i class="bi bi-check-circle-fill text-success me-1"></i>09:12 AM · Have a lovely day!
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+</div>
+
+<!-- =========================================================================
+     2. INTERACTIVE "PEEK INSIDE THE PORTALS" SHOWCASE
+     ========================================================================= -->
+<section class="container portal-showcase-section" id="showcase">
+
+    <div class="text-center mb-4">
+        <span class="hero-pill-badge mb-2">✨ LIVE EXPERIENCE</span>
+        <h2 class="font-serif fs-1 fw-bold mb-2">A Peek Inside Your New Dream Workspace</h2>
+        <p class="text-muted mx-auto" style="max-width: 580px;">
+            Every role receives a dedicated, beautiful experience tailored to streamline their unique daily rhythm.
+        </p>
+
+        <!-- Interactive Portal Tabs -->
+        <div class="portal-nav-pill-group mt-3">
+            <button type="button" class="portal-nav-pill active" onclick="switchPortalTab('employee', this)">
+                🌸 Employee Portal
+            </button>
+            <button type="button" class="portal-nav-pill" onclick="switchPortalTab('hr', this)">
+                💖 HR Operations
+            </button>
+            <button type="button" class="portal-nav-pill" onclick="switchPortalTab('manager', this)">
+                ☕ Manager Hub
+            </button>
+            <button type="button" class="portal-nav-pill" onclick="switchPortalTab('admin', this)">
+                👑 Admin Command
+            </button>
+        </div>
+    </div>
+
+    <!-- TAB 1: EMPLOYEE PORTAL PREVIEW -->
+    <div id="tab-employee" class="portal-view-panel">
+        <div class="portal-preview-card">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-5">
+                    <span class="badge badge-accent mb-2">Self-Service Sanctuary</span>
+                    <h3 class="font-serif fw-bold mb-3">Empowering Every Teammate, Every Day</h3>
+                    <p class="text-muted mb-4" style="line-height: 1.7;">
+                        Clock in with a warm greeting, check remaining leave balances without opening a spreadsheet,
+                        and download crystal-clear payslips anytime.
+                    </p>
+                    <ul class="list-unstyled d-flex flex-column gap-2 text-muted mb-4 small">
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>One-click instant attendance stamp</li>
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>Live leave balance tracker & calendar sync</li>
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>Transparent breakdown of earnings & tax deductions</li>
+                    </ul>
+                    <a asp-area="Identity" asp-page="/Account/Register" class="btn-hrms-primary px-4 py-2">
+                        Try Employee Portal →
+                    </a>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="p-4 rounded-4" style="background: var(--bg-body); border: 1px solid var(--hrms-card-border);">
+                        <!-- Mini Dashboard Mockup -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="chic-avatar-circle" style="background: #ffe4e6;">🌸</div>
+                                <div>
+                                    <div class="fw-bold small">Sakura Tanaka</div>
+                                    <small class="text-muted" style="font-size: 11px;">UI/UX Designer · Design & People</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill small">
+                                <i class="bi bi-dot"></i> Clocked In
+                            </span>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-sm-4">
+                                <div class="p-3 rounded-3 bg-white border" style="background: var(--hrms-card-bg) !important;">
+                                    <small class="text-muted text-uppercase fw-bold" style="font-size: 10px;">Attendance</small>
+                                    <div class="fw-bold fs-5 text-primary">98.5%</div>
+                                    <small class="text-muted" style="font-size: 10px;">On-time this month</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="p-3 rounded-3 bg-white border" style="background: var(--hrms-card-bg) !important;">
+                                    <small class="text-muted text-uppercase fw-bold" style="font-size: 10px;">Leave Days</small>
+                                    <div class="fw-bold fs-5 text-success">18 Days</div>
+                                    <small class="text-muted" style="font-size: 10px;">Annual balance</small>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="p-3 rounded-3 bg-white border" style="background: var(--hrms-card-bg) !important;">
+                                    <small class="text-muted text-uppercase fw-bold" style="font-size: 10px;">Next Payday</small>
+                                    <div class="fw-bold fs-5" style="color: #e06638;">March 31</div>
+                                    <small class="text-muted" style="font-size: 10px;">Direct transfer ready</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-3" style="background: var(--hrms-quote-bg); border: 1px dashed var(--hrms-primary-border);">
+                            <span class="font-hand fs-5 d-block" style="color: var(--hrms-primary);">
+                                "You are capable of wonderful things today! ♡"
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: HR PORTAL PREVIEW -->
+    <div id="tab-hr" class="portal-view-panel" style="display: none;">
+        <div class="portal-preview-card">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-5">
+                    <span class="badge badge-accent mb-2">People & Culture Operations</span>
+                    <h3 class="font-serif fw-bold mb-3">People, Policies, Purpose</h3>
+                    <p class="text-muted mb-4" style="line-height: 1.7;">
+                        Comprehensive talent management without the friction. Onboard new hires with structured
+                        portals, monitor organization-wide attendance, and manage payroll cycles seamlessly.
+                    </p>
+                    <ul class="list-unstyled d-flex flex-column gap-2 text-muted mb-4 small">
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>One-click employee profile generation</li>
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>Department structures & designation mapping</li>
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>Company-wide leave review & compliance audit</li>
+                    </ul>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn-hrms-primary px-4 py-2">
+                        Enter HR Portal →
+                    </a>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="p-4 rounded-4" style="background: var(--bg-body); border: 1px solid var(--hrms-card-border);">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold mb-0"><i class="bi bi-buildings text-primary me-2"></i>Workforce Overview</h6>
+                            <span class="badge badge-accent">HR Master Hub</span>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="p-3 rounded-3 bg-white border" style="background: var(--hrms-card-bg) !important;">
+                                    <div class="stat-icon-wrap stat-icon-pink mb-2"><i class="bi bi-people"></i></div>
+                                    <div class="fw-bold fs-4">128</div>
+                                    <small class="text-muted">Total Active Personnel</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 rounded-3 bg-white border" style="background: var(--hrms-card-bg) !important;">
+                                    <div class="stat-icon-wrap stat-icon-peach mb-2"><i class="bi bi-person-plus"></i></div>
+                                    <div class="fw-bold fs-4">3</div>
+                                    <small class="text-muted">Pending Onboardings</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: MANAGER PORTAL PREVIEW -->
+    <div id="tab-manager" class="portal-view-panel" style="display: none;">
+        <div class="portal-preview-card">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-5">
+                    <span class="badge badge-accent mb-2">Leadership Hub</span>
+                    <h3 class="font-serif fw-bold mb-3">Lead With Empathy & Precision</h3>
+                    <p class="text-muted mb-4" style="line-height: 1.7;">
+                        Review your team's live daily attendance, approve time off requests with single taps,
+                        and conduct structured, uplifting performance evaluations.
+                    </p>
+                    <ul class="list-unstyled d-flex flex-column gap-2 text-muted mb-4 small">
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>Real-time team presence & availability board</li>
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>Swift leave authorization with context</li>
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>Goal milestones and peer kudos tracking</li>
+                    </ul>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn-hrms-primary px-4 py-2">
+                        Enter Manager Hub →
+                    </a>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="p-4 rounded-4" style="background: var(--bg-body); border: 1px solid var(--hrms-card-border);">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold mb-0"><i class="bi bi-check2-circle text-success me-2"></i>Pending Team Approvals</h6>
+                            <span class="badge rounded-pill bg-warning-subtle text-warning border px-2 py-1 small">1 Action Required</span>
+                        </div>
+                        <div class="p-3 rounded-3 bg-white border mb-2 d-flex justify-content-between align-items-center" style="background: var(--hrms-card-bg) !important;">
+                            <div>
+                                <div class="fw-bold small">Sakura Tanaka — Annual Leave</div>
+                                <small class="text-muted">March 12 - March 15 (4 Days) · "Family Trip"</small>
+                            </div>
+                            <span class="badge bg-success-subtle text-success px-3 py-1 rounded-pill">Approve ♡</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: ADMIN PORTAL PREVIEW -->
+    <div id="tab-admin" class="portal-view-panel" style="display: none;">
+        <div class="portal-preview-card">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-5">
+                    <span class="badge badge-accent mb-2">Global System Governance</span>
+                    <h3 class="font-serif fw-bold mb-3">Enterprise Governance & Trust</h3>
+                    <p class="text-muted mb-4" style="line-height: 1.7;">
+                        Architect role boundaries, oversee audit trails, manage department nodes, and configure system-wide security policies effortlessly.
+                    </p>
+                    <ul class="list-unstyled d-flex flex-column gap-2 text-muted mb-4 small">
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>Strict Role-Based Access Control (RBAC)</li>
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>Encrypted credential hashing & CSRF shields</li>
+                        <li><i class="bi bi-heart-fill text-primary me-2"></i>High-availability database architecture</li>
+                    </ul>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn-hrms-primary px-4 py-2">
+                        Enter Admin Control →
+                    </a>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="p-4 rounded-4" style="background: var(--bg-body); border: 1px solid var(--hrms-card-border);">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold mb-0"><i class="bi bi-shield-check text-primary me-2"></i>System Health & Security</h6>
+                            <span class="badge bg-success-subtle text-success">All Systems Online</span>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="p-3 rounded-3 bg-white border" style="background: var(--hrms-card-bg) !important;">
+                                    <small class="text-muted text-uppercase fw-bold" style="font-size: 10px;">Security</small>
+                                    <div class="fw-bold fs-6 text-primary">AES-256 + RBAC</div>
+                                    <small class="text-muted" style="font-size: 11px;">Zero vulnerabilities</small>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 rounded-3 bg-white border" style="background: var(--hrms-card-bg) !important;">
+                                    <small class="text-muted text-uppercase fw-bold" style="font-size: 10px;">Database</small>
+                                    <div class="fw-bold fs-6 text-success">SQL LocalDB Active</div>
+                                    <small class="text-muted" style="font-size: 11px;">Automatic syncing</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- =========================================================================
+     3. "DESIGNED FOR YOUR DAILY RHYTHM" — CHIC 3-STEP FLOW
+     ========================================================================= -->
+<section class="container py-5">
+    <div class="text-center mb-5">
+        <span class="hero-pill-badge mb-2">DAILY HARMONY</span>
+        <h2 class="font-serif fs-1 fw-bold mb-2">Designed For Your Workday Rhythm</h2>
+        <p class="text-muted mx-auto" style="max-width: 540px;">
+            Experience a workday that flows smoothly from your morning coffee to your evening wrap-up.
+        </p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Step 1: Morning -->
+        <div class="col-md-4">
+            <div class="rhythm-card">
+                <div class="rhythm-time-badge">
+                    <i class="bi bi-sun"></i> 09:00 AM · Morning
+                </div>
+                <div class="stat-icon-wrap stat-icon-pink mb-3">
+                    <i class="bi bi-cup-hot fs-4"></i>
+                </div>
+                <h4 class="font-serif fw-bold mb-2">Gentle Morning Welcome</h4>
+                <p class="text-muted small mb-0" style="line-height: 1.7;">
+                    Clock in with a single pleasant tap, receive your personalized morning greeting, and view your daily agenda with complete peace of mind.
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 2: Afternoon -->
+        <div class="col-md-4">
+            <div class="rhythm-card">
+                <div class="rhythm-time-badge" style="background: var(--hrms-accent-peach); color: #e06638;">
+                    <i class="bi bi-flower1"></i> 01:30 PM · Afternoon
+                </div>
+                <div class="stat-icon-wrap stat-icon-peach mb-3">
+                    <i class="bi bi-calendar2-heart fs-4"></i>
+                </div>
+                <h4 class="font-serif fw-bold mb-2">Harmonious Requests</h4>
+                <p class="text-muted small mb-0" style="line-height: 1.7;">
+                    Check your live remaining leave quota, plan personal getaways, and receive prompt, friendly manager sign-offs with zero red tape.
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 3: Evening -->
+        <div class="col-md-4">
+            <div class="rhythm-card">
+                <div class="rhythm-time-badge" style="background: var(--hrms-accent-lavender); color: #7c4dff;">
+                    <i class="bi bi-moon-stars"></i> 06:00 PM · Evening
+                </div>
+                <div class="stat-icon-wrap stat-icon-lavender mb-3">
+                    <i class="bi bi-award fs-4"></i>
+                </div>
+                <h4 class="font-serif fw-bold mb-2">Growth & Gratitude</h4>
+                <p class="text-muted small mb-0" style="line-height: 1.7;">
+                    Receive uplifting reviews from leadership, review transparent monthly payroll deposits, and wrap up knowing your contributions matter.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     4. CORE MODULES GRID
+     ========================================================================= -->
+<section class="container py-5" id="features">
+
+    <div class="text-center mb-5">
+        <span class="hero-pill-badge mb-2">CORE MODULES</span>
+        <h2 class="font-serif fs-1 fw-bold mb-3">Everything In One Harmonious Space</h2>
+        <p class="text-muted mx-auto" style="max-width: 580px;">
+            Engineered with deep care to bring warmth, beauty, and operational simplicity to everyday human resources.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Employees -->
+        <div class="col-md-4">
+            <div class="hrms-card hrms-card-hover h-100">
+                <div class="stat-icon-wrap stat-icon-pink mb-3">
+                    <i class="bi bi-people fs-4"></i>
+                </div>
+                <h4 class="fw-bold mb-2">Employee Directory</h4>
+                <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">
+                    Centralize personal profiles, department mapping, designations, and contact channels in one organized directory.
+                </p>
+                <span class="fw-bold" style="color: var(--hrms-primary); font-size: 13px;">
+                    Explore Directory →
+                </span>
+            </div>
+        </div>
+
+        <!-- Attendance -->
+        <div class="col-md-4">
+            <div class="hrms-card hrms-card-hover h-100">
+                <div class="stat-icon-wrap stat-icon-peach mb-3">
+                    <i class="bi bi-clock-history fs-4"></i>
+                </div>
+                <h4 class="fw-bold mb-2">Mindful Attendance</h4>
+                <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">
+                    One-click daily check-in and check-out stamps, real-time timestamps, and automated monthly attendance calculations.
+                </p>
+                <span class="fw-bold" style="color: var(--hrms-primary); font-size: 13px;">
+                    Track Attendance →
+                </span>
+            </div>
+        </div>
+
+        <!-- Leaves -->
+        <div class="col-md-4">
+            <div class="hrms-card hrms-card-hover h-100">
+                <div class="stat-icon-wrap stat-icon-lavender mb-3">
+                    <i class="bi bi-calendar-heart fs-4"></i>
+                </div>
+                <h4 class="fw-bold mb-2">Leave Sanctuary</h4>
+                <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">
+                    Submit leave requests in seconds, review remaining balance allowances, and grant swift manager approvals with status tracking.
+                </p>
+                <span class="fw-bold" style="color: var(--hrms-primary); font-size: 13px;">
+                    Review Leaves →
+                </span>
+            </div>
+        </div>
+
+        <!-- Payroll -->
+        <div class="col-md-4">
+            <div class="hrms-card hrms-card-hover h-100">
+                <div class="stat-icon-wrap stat-icon-mint mb-3">
+                    <i class="bi bi-cash-coin fs-4"></i>
+                </div>
+                <h4 class="fw-bold mb-2">Transparent Payroll</h4>
+                <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">
+                    Clear compensation statements, itemized allowances and statutory deductions, with complete payment histories at a glance.
+                </p>
+                <span class="fw-bold" style="color: var(--hrms-primary); font-size: 13px;">
+                    View Payroll →
+                </span>
+            </div>
+        </div>
+
+        <!-- Performance -->
+        <div class="col-md-4">
+            <div class="hrms-card hrms-card-hover h-100">
+                <div class="stat-icon-wrap stat-icon-pink mb-3">
+                    <i class="bi bi-award fs-4"></i>
+                </div>
+                <h4 class="fw-bold mb-2">Performance & Growth</h4>
+                <p class="text-muted mb-4" style="font-size: 14px; line-height: 1.6;">
+                    Structured reviews, ratings, constructive manager feedback, and milestone badges celebrating every career achievement.
+                </p>
+                <span class="fw-bold" style="color: var(--hrms-primary); font-size: 13px;">
+                    Evaluate Growth →
+                </span>
+            </div>
+        </div>
+
+        <!-- Culture -->
+        <div class="col-md-4">
+            <div class="hrms-card hrms-card-hover h-100 d-flex flex-column justify-content-between"
+                 style="background: var(--hrms-quote-bg); border-color: var(--hrms-quote-border);">
+                <div>
+                    <div class="stat-icon-wrap stat-icon-peach mb-3">
+                        <i class="bi bi-heart-fill fs-4 text-danger"></i>
+                    </div>
+                    <h4 class="font-serif fw-bold mb-2">Workplace Wellbeing</h4>
+                    <p class="text-muted mb-3" style="font-size: 14px; line-height: 1.6;">
+                        "When employees feel seen, supported, and respected, the entire organization thrives with creativity and joy."
+                    </p>
+                </div>
+                <span class="font-hand fs-4" style="color: var(--hrms-primary);">
+                    Better Together ♡
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================================================
+     5. PHILOSOPHY & CULTURE SECTION (EDITORIAL CHIC)
+     ========================================================================= -->
+<section class="container py-5 mb-4" id="about">
+    <div class="hrms-card p-4 p-md-5" style="border-radius: 32px; background: var(--hrms-card-bg);">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="hero-pill-badge mb-3">OUR CORE PHILOSOPHY</span>
+                <h2 class="font-serif fs-1 fw-bold mb-3">
+                    Work Shouldn't Feel Grey, Rigid, Or Overwhelming.
+                </h2>
+                <p class="text-muted mb-4" style="font-size: 15px; line-height: 1.8;">
+                    Traditional corporate HR tools were built for compliance databases, not for human beings.
+                    We reimagined the entire enterprise HR experience from the ground up: infusing warmth,
+                    gentle blush tones, intuitive navigation, and thoughtful touches that turn everyday administrative
+                    tasks into moments of delight.
+                </p>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check-circle-fill text-primary"></i>
+                            <span class="small fw-semibold">Empathetic by Design</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check-circle-fill text-primary"></i>
+                            <span class="small fw-semibold">Role-Based Clarity</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check-circle-fill text-primary"></i>
+                            <span class="small fw-semibold">Zero-Clutter Flow</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-check-circle-fill text-primary"></i>
+                            <span class="small fw-semibold">Cloud-Ready & Secure</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3">
+                    <a asp-area="Identity" asp-page="/Account/Register" class="btn-hrms-primary px-4 py-2">
+                        Join Our Platform
+                    </a>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn-hrms-outline px-4 py-2">
+                        Sign In
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="motivational-card p-4 p-md-5">
+                    <img src="~/images/cute-avatar.jpg" alt="Aesthetic HR Representative" class="motivational-avatar" style="width: 88px; height: 88px;" />
+                    <div>
+                        <div class="motivational-text">"Good People, Brighter Days."</div>
+                        <p class="motivational-sub mb-2">
+                            At HRMS, we believe true productivity begins when every teammate feels seen, appreciated, and inspired in their workspace.
+                        </p>
+                        <span class="font-hand fs-4 d-block mt-2" style="color: var(--hrms-primary);">
+                            With warmth & care ♡
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================================================
+     6. GRAND CHIC CTA BANNER
+     ========================================================================= -->
+<section class="container mb-5 pb-4">
+    <div class="chic-cta-banner">
+        <span class="badge badge-accent mb-3">🌸 GET STARTED TODAY</span>
+        <h2 class="font-serif display-6 fw-bold mb-3">
+            Bring Beauty, Calm & Clarity To Your Workday.
+        </h2>
+        <p class="text-muted mx-auto mb-4" style="max-width: 600px; font-size: 16px; line-height: 1.7;">
+            Join forward-thinking teams that prioritize both peak performance and human wellbeing.
+            It only takes a moment to get started.
+        </p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn-hrms-primary px-4 py-3 fs-6">
+                <span>Create Free Employee Account</span>
+                <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn-hrms-outline px-4 py-3 fs-6">
+                <span>Sign In to Portal</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function switchPortalTab(tabName, btnElement) {
+            // Hide all tab panels
+            document.querySelectorAll('.portal-view-panel').forEach(function(panel) {
+                panel.style.display = 'none';
+            });
+
+            // Remove active class from all pill buttons
+            document.querySelectorAll('.portal-nav-pill').forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+
+            // Show target panel
+            var targetPanel = document.getElementById('tab-' + tabName);
+            if (targetPanel) {
+                targetPanel.style.display = 'block';
+            }
+
+            // Set active class on clicked button
+            if (btnElement) {
+                btnElement.classList.add('active');
+            }
+        }
+    </script>
+} *@
+
 @{
     ViewData["Title"] = "Workforce Hub - People. Process. Progress.";
 }

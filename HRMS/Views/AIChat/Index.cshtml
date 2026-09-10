@@ -1,0 +1,308 @@
+﻿@{
+    ViewData["Title"] = "AI Assistant";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header">
+            <h3>HRMS AI Assistant</h3>
+            <p class="mb-0">
+                Select a category and choose a question.
+            </p>
+        </div>
+
+        <div class="card-body">
+
+            @if (TempData["ChatMessage"] != null)
+            {
+                <div class="alert alert-warning">
+                    @TempData["ChatMessage"]
+                </div>
+            }
+
+            <!-- Category Selection -->
+
+            <div class="mb-4">
+
+                <label class="form-label">
+                    <strong>Select Category</strong>
+                </label>
+
+                <select id="category"
+                        class="form-select"
+                        onchange="showQuestions()">
+
+                    <option value="">-- Select Category --</option>
+
+                    <option value="Leave">
+                        Leave
+                    </option>
+
+                    <option value="Attendance">
+                        Attendance
+                    </option>
+
+                    <option value="Payroll">
+                        Payroll
+                    </option>
+
+                    <option value="Performance">
+                        Performance
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Leave Questions -->
+
+            <div id="Leave"
+                 class="question-section"
+                 style="display:none;">
+
+                <h5>Leave Questions</h5>
+
+                <button type="button"
+                        class="btn btn-outline-primary question-btn"
+                        data-question="How can I apply for leave?">
+
+                    How can I apply for leave?
+
+                </button>
+
+                <button type="button"
+                        class="btn btn-outline-primary question-btn"
+                        data-question="What is the leave approval process?">
+
+                    What is the leave approval process?
+
+                </button>
+
+                <button type="button"
+                        class="btn btn-outline-primary question-btn"
+                        data-question="Can I cancel an approved leave?">
+
+                    Can I cancel an approved leave?
+
+                </button>
+
+            </div>
+
+
+            <!-- Attendance Questions -->
+
+            <div id="Attendance"
+                 class="question-section"
+                 style="display:none;">
+
+                <h5>Attendance Questions</h5>
+
+                <button type="button"
+                        class="btn btn-outline-primary question-btn"
+                        data-question="How do I check in?">
+
+                    How do I check in?
+
+                </button>
+
+                <button type="button"
+                        class="btn btn-outline-primary question-btn"
+                        data-question="How do I check out?">
+
+                    How do I check out?
+
+                </button>
+
+            </div>
+
+
+            <!-- Payroll Questions -->
+
+            <div id="Payroll"
+                 class="question-section"
+                 style="display:none;">
+
+                <h5>Payroll Questions</h5>
+
+                <button type="button"
+                        class="btn btn-outline-primary question-btn"
+                        data-question="Where can I view my payroll?">
+
+                    Where can I view my payroll?
+
+                </button>
+
+                <button type="button"
+                        class="btn btn-outline-primary question-btn"
+                        data-question="How is net salary calculated?">
+
+                    How is net salary calculated?
+
+                </button>
+
+            </div>
+
+
+            <!-- Performance Questions -->
+
+            <div id="Performance"
+                 class="question-section"
+                 style="display:none;">
+
+                <h5>Performance Questions</h5>
+
+                <button type="button"
+                        class="btn btn-outline-primary question-btn"
+                        data-question="Where can I see my performance review?">
+
+                    Where can I see my performance review?
+
+                </button>
+
+            </div>
+
+
+            <!-- Ask Form -->
+
+            <form asp-controller="AIChat"
+                  asp-action="Ask"
+                  method="post"
+                  class="mt-4">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       id="selectedCategory"
+                       name="category" />
+
+                <input type="hidden"
+                       id="selectedQuestion"
+                       name="question" />
+
+                <button type="submit"
+                        id="askButton"
+                        class="btn btn-primary"
+                        style="display:none;">
+
+                    Ask Assistant
+
+                </button>
+
+            </form>
+
+
+            <!-- Answer -->
+            @if (ViewBag.Answer != null)
+            {
+                <div class="card mt-4">
+
+                    <div class="card-header">
+                        <strong>Your Question</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                        <p>
+                            @ViewBag.Question
+                        </p>
+
+                        <hr />
+
+                        <strong>AI Assistant:</strong>
+
+                        <p class="mt-2">
+                            @ViewBag.Answer
+                        </p>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    function showQuestions() {
+
+        var category =
+            document.getElementById("category").value;
+
+        var sections =
+            document.getElementsByClassName("question-section");
+
+
+        // Hide all sections
+
+        for (var i = 0; i < sections.length; i++) {
+
+            sections[i].style.display = "none";
+
+        }
+
+
+        // Show selected category
+
+        if (category !== "") {
+
+            document.getElementById(category)
+                .style.display = "block";
+
+        }
+
+
+        // Reset selected question
+
+        document.getElementById("selectedCategory").value = "";
+
+        document.getElementById("selectedQuestion").value = "";
+
+        document.getElementById("askButton")
+            .style.display = "none";
+
+    }
+
+
+    // Question button click
+
+    var questionButtons =
+        document.getElementsByClassName("question-btn");
+
+
+    for (var i = 0; i < questionButtons.length; i++) {
+
+        questionButtons[i].addEventListener(
+            "click",
+            function() {
+
+                var category =
+                    document.getElementById("category").value;
+
+                var question =
+                    this.getAttribute("data-question");
+
+
+                document.getElementById("selectedCategory")
+                    .value = category;
+
+                document.getElementById("selectedQuestion")
+                    .value = question;
+
+
+                document.getElementById("askButton")
+                    .style.display = "inline-block";
+
+            }
+        );
+
+    }
+
+</script>

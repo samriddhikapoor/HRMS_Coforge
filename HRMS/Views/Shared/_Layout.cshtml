@@ -1,4 +1,4 @@
-@using Microsoft.AspNetCore.Identity
+@* @using Microsoft.AspNetCore.Identity
 @using HRMS.Data
 
 <!DOCTYPE html>
@@ -247,11 +247,11 @@
                             <i class="bi bi-list fs-5"></i>
                         </button>
 
-                       <div class="topbar-search d-none d-sm-block">
+                       @* <div class="topbar-search d-none d-sm-block">
                             <i class="bi bi-search"></i>
                             <input type="text" placeholder="Search anything..." />
-                        </div>  
-                        <div class="topbar-welcome d-none d-sm-flex align-items-center gap-2">
+                        </div>   *@
+    @*                     <div class="topbar-welcome d-none d-sm-flex align-items-center gap-2">
                             <div class="topbar-date-badge">
                                 <i class="bi bi-calendar-event me-1"></i>
                                 <span>@DateTime.Now.ToString("dddd, dd MMMM yyyy")</span>
@@ -333,6 +333,490 @@
                 <a asp-area="Identity" asp-page="/Account/Register" class="btn-hrms-primary">
                     Register
                 </a>
+            </div>
+
+        </header>
+
+        <main>
+            @RenderBody()
+        </main>
+
+        <footer class="hrms-footer">
+            © @DateTime.Now.Year HRMS · Workforce Hub · Better People · Brighter Tomorrows ♡
+        </footer>
+    }
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false) *@
+@* 
+</body>
+</html> *@ 
+
+@using Microsoft.AspNetCore.Identity
+@using HRMS.Data
+
+<!DOCTYPE html>
+<html lang="en" data-theme="aesthetic">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - HRMS Workforce Hub</title>
+
+    <script>
+            // Instant Theme Application to prevent flashing
+            (function() {
+                const savedTheme = localStorage.getItem('hrms_theme') || 'aesthetic';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            })();
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 & Bootstrap Icons -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom Modern HRMS CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <!-- ================= AUTHENTICATED DASHBOARD LAYOUT ================= -->
+        <div class="dashboard-wrapper">
+
+            <!-- SIDEBAR -->
+            <aside class="dashboard-sidebar">
+
+                <div class="sidebar-header">
+                    <a asp-controller="Home" asp-action="Index" class="sidebar-brand">
+                        <div class="sidebar-logo">
+                            ♡
+                        </div>
+
+                        <div>
+                            <div class="sidebar-brand-name">HRMS</div>
+                            <div class="sidebar-brand-sub">WORKFORCE HUB</div>
+                        </div>
+                    </a>
+                </div>
+
+                <nav class="sidebar-menu">
+                    <p class="sidebar-label">Navigation</p>
+
+                    <!-- ================= EMPLOYEE ================= -->
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <a asp-controller="EmployeeDashboard"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "EmployeeDashboard" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "active" : "")">
+                            <i class="bi bi-grid-1x2"></i>
+                            <span>Dashboard</span>
+                        </a>
+
+                        <a asp-controller="EmployeeDashboard"
+                           asp-action="Profile"
+                           class="sidebar-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Profile" ? "active" : "")">
+                            <i class="bi bi-person"></i>
+                            <span>My Profile</span>
+                        </a>
+
+                        <a asp-controller="EmployeeDashboard"
+                           asp-action="Attendance"
+                           class="sidebar-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Attendance" ? "active" : "")">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Attendance</span>
+                        </a>
+
+                        <a asp-controller="EmployeeDashboard"
+                           asp-action="Leaves"
+                           class="sidebar-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Leaves" || ViewContext.RouteData.Values["action"]?.ToString() == "ApplyLeave" ? "active" : "")">
+                            <i class="bi bi-calendar-heart"></i>
+                            <span>Leaves</span>
+                        </a>
+
+                        <a asp-controller="EmployeeDashboard"
+                           asp-action="Payroll"
+                           class="sidebar-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Payroll" ? "active" : "")">
+                            <i class="bi bi-cash-stack"></i>
+                            <span>Payroll</span>
+                        </a>
+
+                        <a asp-controller="EmployeeDashboard"
+                           asp-action="Performance"
+                           class="sidebar-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Performance" ? "active" : "")">
+                            <i class="bi bi-star"></i>
+                            <span>Performance</span>
+                        </a>
+                    }
+
+                    <!-- ================= HR ================= -->
+                    @if (User.IsInRole("HR"))
+                    {
+                        <a asp-controller="HRDashboard"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "HRDashboard" ? "active" : "")">
+                            <i class="bi bi-grid-1x2"></i>
+                            <span>HR Dashboard</span>
+                        </a>
+
+                        <a asp-controller="Employee"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Employee" ? "active" : "")">
+                            <i class="bi bi-people"></i>
+                            <span>Employees</span>
+                        </a>
+
+                        <a asp-controller="Department"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Department" ? "active" : "")">
+                            <i class="bi bi-building"></i>
+                            <span>Departments</span>
+                        </a>
+
+                        <a asp-controller="Attendance"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Attendance" ? "active" : "")">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Attendance</span>
+                        </a>
+
+                        <a asp-controller="LeaveRequest"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "LeaveRequest" ? "active" : "")">
+                            <i class="bi bi-calendar-heart"></i>
+                            <span>Leave Requests</span>
+                        </a>
+
+                        <a asp-controller="Payroll"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Payroll" ? "active" : "")">
+                            <i class="bi bi-cash-stack"></i>
+                            <span>Payroll</span>
+                        </a>
+
+                        <a asp-controller="PerformanceReview"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "PerformanceReview" ? "active" : "")">
+                            <i class="bi bi-star"></i>
+                            <span>Performance</span>
+                        </a>
+                    }
+
+                    <!-- ================= ADMIN ================= -->
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Admin"
+                           asp-action="Dashboard"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Admin" && ViewContext.RouteData.Values["action"]?.ToString() == "Dashboard" ? "active" : "")">
+                            <i class="bi bi-shield-check"></i>
+                            <span>Admin Dashboard</span>
+                        </a>
+
+                        <a asp-controller="Employee"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Employee" ? "active" : "")">
+                            <i class="bi bi-people"></i>
+                            <span>Employees</span>
+                        </a>
+
+                        <a asp-controller="Department"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Department" ? "active" : "")">
+                            <i class="bi bi-building"></i>
+                            <span>Departments</span>
+                        </a>
+
+                        <a asp-controller="Manager"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Manager" ? "active" : "")">
+                            <i class="bi bi-person-badge"></i>
+                            <span>Managers</span>
+                        </a>
+
+                        <a asp-controller="HR"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "HR" ? "active" : "")">
+                            <i class="bi bi-person-workspace"></i>
+                            <span>HR Accounts</span>
+                        </a>
+
+                        <a asp-controller="LeaveRequest"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "LeaveRequest" ? "active" : "")">
+                            <i class="bi bi-calendar-heart"></i>
+                            <span>Leave Requests</span>
+                        </a>
+                    }
+
+                    <!-- ================= MANAGER ================= -->
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <a asp-controller="ManagerDashboard"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "ManagerDashboard" ? "active" : "")">
+                            <i class="bi bi-grid-1x2"></i>
+                            <span>Manager Dashboard</span>
+                        </a>
+
+                        <a asp-controller="Employee"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Employee" ? "active" : "")">
+                            <i class="bi bi-people"></i>
+                            <span>Department Team</span>
+                        </a>
+
+                        <a asp-controller="LeaveRequest"
+                           asp-action="Index"
+                           class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "LeaveRequest" ? "active" : "")">
+                            <i class="bi bi-calendar-heart"></i>
+                            <span>Leave Approvals</span>
+                        </a>
+                    }
+
+                    <!-- ================= AI ASSISTANT ================= -->
+                    <a asp-controller="AIChat"
+                       asp-action="Index"
+                       class="sidebar-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "AIChat" ? "active" : "")">
+                        <i class="bi bi-robot"></i>
+                        <span>AI Assistant</span>
+                    </a>
+
+                    <!-- ================= SHORTCUTS ================= -->
+                    <p class="sidebar-label mt-3">Shortcuts</p>
+
+                    <a asp-controller="Home"
+                       asp-action="Index"
+                       class="sidebar-item">
+                        <i class="bi bi-house"></i>
+                        <span>Public Home</span>
+                    </a>
+
+                </nav>
+
+                <!-- ================= SIDEBAR FOOTER ================= -->
+                <div class="sidebar-footer">
+
+                    <div class="sidebar-user mb-3">
+
+                        <div class="sidebar-avatar">
+                            @(User.Identity?.Name?.Substring(0, 1).ToUpper() ?? "U")
+                        </div>
+
+                        <div class="sidebar-user-info">
+
+                            <div class="sidebar-user-name"
+                                 title="@User.Identity?.Name">
+                                @User.Identity?.Name
+                            </div>
+
+                            <div class="sidebar-user-role">
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <span>Administrator</span>
+                                }
+                                else if (User.IsInRole("HR"))
+                                {
+                                    <span>HR Manager</span>
+                                }
+                                else if (User.IsInRole("Manager"))
+                                {
+                                    <span>Manager</span>
+                                }
+                                else
+                                {
+                                    <span>Employee</span>
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <form asp-area="Identity"
+                          asp-page="/Account/Logout"
+                          method="post"
+                          class="m-0">
+
+                        <button type="submit"
+                                class="btn btn-hrms-danger-soft w-100 justify-content-center">
+
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Logout</span>
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </aside>
+
+            <!-- ================= MAIN CONTENT ================= -->
+            <div class="dashboard-main">
+
+                <!-- TOPBAR -->
+                <header class="dashboard-topbar">
+
+                    <div class="d-flex align-items-center gap-3">
+
+                        <button class="btn btn-hrms-soft d-lg-none"
+                                type="button"
+                                onclick="toggleSidebar()">
+
+                            <i class="bi bi-list fs-5"></i>
+
+                        </button>
+
+                        <div class="topbar-welcome d-none d-sm-flex align-items-center gap-2">
+
+                            <div class="topbar-date-badge">
+
+                                <i class="bi bi-calendar-event me-1"></i>
+
+                                <span>
+                                    @DateTime.Now.ToString("dddd, dd MMMM yyyy")
+                                </span>
+
+                            </div>
+
+                            <span class="topbar-quote-tag font-hand d-none d-md-inline">
+                                ✨ Make today wonderfully productive ♡
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="topbar-actions">
+
+                        <!-- Theme Toggle -->
+                        <button type="button"
+                                class="theme-toggle-btn"
+                                onclick="toggleTheme()">
+
+                            <span class="theme-toggle-icon">🌸</span>
+                            <span>Cute Mode</span>
+
+                        </button>
+
+                        <div class="d-flex align-items-center gap-2">
+
+                            <div class="sidebar-avatar"
+                                 style="width:36px; height:36px; font-size:13px;">
+
+                                @(User.Identity?.Name?.Substring(0, 1).ToUpper() ?? "U")
+
+                            </div>
+
+                            <span class="d-none d-md-inline fw-semibold"
+                                  style="font-size: 13px; color: var(--hrms-text-primary);">
+
+                                @User.Identity?.Name
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </header>
+
+                <!-- ================= PAGE CONTENT ================= -->
+                <main class="dashboard-content">
+                    @RenderBody()
+                </main>
+
+                <!-- FOOTER -->
+                <footer class="hrms-footer">
+                    © @DateTime.Now.Year HRMS · Workforce Hub · Crafted with Care & Elegance ♡
+                </footer>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <!-- ================= PUBLIC / NON-AUTHENTICATED LAYOUT ================= -->
+
+        <header class="hrms-navbar">
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="brand">
+
+                <div class="brand-icon">
+                    ♡
+                </div>
+
+                <div class="brand-text">
+
+                    <div class="brand-name">HRMS</div>
+                    <div class="brand-subtitle">WORKFORCE HUB</div>
+
+                </div>
+
+            </a>
+
+            <nav class="nav-center d-none d-md-flex">
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="nav-link-custom">
+                    Home
+                </a>
+
+                <a href="/#about"
+                   class="nav-link-custom">
+                    About
+                </a>
+
+                <a href="/#features"
+                   class="nav-link-custom">
+                    Features
+                </a>
+
+            </nav>
+
+            <div class="nav-right">
+
+                <!-- Theme Toggle -->
+                <button type="button"
+                        class="theme-toggle-btn"
+                        onclick="toggleTheme()">
+
+                    <span class="theme-toggle-icon">🌸</span>
+                    <span>Cute Mode</span>
+
+                </button>
+
+                <a asp-area="Identity"
+                   asp-page="/Account/Login"
+                   class="btn-hrms-outline">
+                    Login
+                </a>
+
+                <a asp-area="Identity"
+                   asp-page="/Account/Register"
+                   class="btn-hrms-primary">
+                    Register
+                </a>
+
             </div>
 
         </header>

@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿
+
+using AutoMapper;
 using HRMS.Models;
 using HRMS.Repositories.Interfaces;
 using HRMS.ViewModels.Department;
@@ -65,12 +67,24 @@ namespace HRMS.Controllers
                 return View(departmentViewModel);
             }
 
-            var department =
-                _mapper.Map<Department>(departmentViewModel);
+            try
+            {
+                var department =
+                    _mapper.Map<Department>(departmentViewModel);
 
-            await _departmentRepository.AddDepartmentAsync(department);
+                await _departmentRepository
+                    .AddDepartmentAsync(department);
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Something went wrong while creating department.");
+
+                return View(departmentViewModel);
+            }
         }
 
         // GET: Department/Edit/5
@@ -107,12 +121,24 @@ namespace HRMS.Controllers
                 return View(departmentViewModel);
             }
 
-            var department =
-                _mapper.Map<Department>(departmentViewModel);
+            try
+            {
+                var department =
+                    _mapper.Map<Department>(departmentViewModel);
 
-            await _departmentRepository.UpdateDepartmentAsync(department);
+                await _departmentRepository
+                    .UpdateDepartmentAsync(department);
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Something went wrong while updating department.");
+
+                return View(departmentViewModel);
+            }
         }
 
         // GET: Department/Delete/5
@@ -137,9 +163,22 @@ namespace HRMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _departmentRepository.DeleteDepartmentAsync(id);
+            try
+            {
+                await _departmentRepository
+                    .DeleteDepartmentAsync(id);
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] =
+                    "Something went wrong while deleting department.";
+
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }
+
+

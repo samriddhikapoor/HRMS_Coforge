@@ -1,4 +1,5 @@
-﻿using HRMS.Models;
+﻿
+using HRMS.Models;
 using HRMS.Repositories.Interfaces;
 using HRMS.ViewModels.LeaveRequest;
 using Microsoft.AspNetCore.Authorization;
@@ -214,6 +215,47 @@ namespace HRMS.Controllers
         }
 
         // POST: EmployeeDashboard/ApplyLeave
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> ApplyLeave(
+        //    LeaveRequestViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
+
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    if (userId == null)
+        //    {
+        //        return Unauthorized();
+        //    }
+
+        //    var employee =
+        //        await _employeeRepository.GetEmployeeByUserIdAsync(userId);
+
+        //    if (employee == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var leaveRequest = new LeaveRequest
+        //    {
+        //        LeaveType = model.LeaveType,
+        //        StartDate = model.StartDate,
+        //        EndDate = model.EndDate,
+        //        Reason = model.Reason,
+        //        Status = "Pending",
+        //        EmployeeId = employee.EmployeeId
+        //    };
+
+        //    await _leaveRequestRepository
+        //        .AddLeaveRequestAsync(leaveRequest);
+
+        //    return RedirectToAction("Leaves");
+        //}
+        // POST: EmployeeDashboard/ApplyLeave
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ApplyLeave(
@@ -232,12 +274,137 @@ namespace HRMS.Controllers
             }
 
             var employee =
-                await _employeeRepository.GetEmployeeByUserIdAsync(userId);
+                await _employeeRepository
+                    .GetEmployeeByUserIdAsync(userId);
 
             if (employee == null)
             {
                 return NotFound();
             }
+
+
+            // ==========================================
+            // BUSINESS RULE 1:
+            // START DATE CANNOT BE AFTER END DATE
+            // ==========================================
+
+            if (model.StartDate.Date > model.EndDate.Date)
+            {
+                ModelState.AddModelError(
+                    "StartDate",
+                    "Start date cannot be after end date.");
+
+                return View(model);
+            }
+
+
+            // ==========================================
+            // BUSINESS RULE 2:
+            // LEAVE CANNOT BE APPLIED FOR PAST DATE
+            // ==========================================
+
+            if (model.StartDate.Date < DateTime.Today)
+            {
+                ModelState.AddModelError(
+                    "StartDate",
+                    "Leave cannot be applied for a past date.");
+
+                return View(model);
+            }
+
+
+            // ==========================================
+            // BUSINESS RULE 3:
+            // MAXIMUM 3 DAYS PER LEAVE REQUEST
+            // ==========================================
+
+            var leaveDays =
+                (model.EndDate.Date - model.StartDate.Date).Days + 1;
+
+            if (leaveDays > 3)
+            {
+                ModelState.AddModelError(
+                    "EndDate",
+                    "You can apply for a maximum of 3 consecutive leave days.");
+
+                return View(model);
+            }
+
+
+            // ==========================================
+            // BUSINESS RULE 4:
+            // LEAVE MUST BE WITHIN ONE MONTH
+            // ==========================================
+
+            if (model.StartDate.Month != model.EndDate.Month ||
+                model.StartDate.Year != model.EndDate.Year)
+            {
+                ModelState.AddModelError(
+                    "EndDate",
+                    "Leave dates must be within the same month.");
+
+                return View(model);
+            }
+
+
+            // ==========================================
+            // GET EXISTING LEAVE REQUESTS
+            // ==========================================
+
+            var existingLeaves =
+                await _leaveRequestRepository
+                    .GetLeaveRequestsByEmployeeIdAsync(
+                        employee.EmployeeId);
+
+
+            // ==========================================
+            // BUSINESS RULE 5:
+            // MAXIMUM 2 LEAVE REQUESTS PER MONTH
+            // ==========================================
+
+            var requestedMonth = model.StartDate.Month;
+            var requestedYear = model.StartDate.Year;
+
+            var monthlyLeaveCount =
+                existingLeaves.Count(l =>
+                    l.Status != "Rejected" &&
+                    l.StartDate.Month == requestedMonth &&
+                    l.StartDate.Year == requestedYear);
+
+            if (monthlyLeaveCount >= 2)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "You can apply for a maximum of 2 leave requests in a month.");
+
+                return View(model);
+            }
+
+
+            // ==========================================
+            // BUSINESS RULE 6:
+            // NO OVERLAPPING LEAVE
+            // ==========================================
+
+            var overlappingLeave =
+                existingLeaves.Any(l =>
+                    l.Status != "Rejected" &&
+                    model.StartDate.Date <= l.EndDate.Date &&
+                    model.EndDate.Date >= l.StartDate.Date);
+
+            if (overlappingLeave)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "You already have a leave request for one or more of these dates.");
+
+                return View(model);
+            }
+
+
+            // ==========================================
+            // CREATE LEAVE REQUEST
+            // ==========================================
 
             var leaveRequest = new LeaveRequest
             {
@@ -252,7 +419,11 @@ namespace HRMS.Controllers
             await _leaveRequestRepository
                 .AddLeaveRequestAsync(leaveRequest);
 
-            return RedirectToAction("Leaves");
+
+            TempData["LeaveMessage"] =
+                "Leave request submitted successfully and is pending approval.";
+
+            return RedirectToAction(nameof(Leaves));
         }
 
         // GET: EmployeeDashboard/Payroll

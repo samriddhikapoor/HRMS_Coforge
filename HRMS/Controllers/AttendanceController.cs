@@ -1,4 +1,6 @@
-﻿using HRMS.Repositories.Interfaces;
+﻿
+
+using HRMS.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,10 +20,21 @@ namespace HRMS.Controllers
         // GET: Attendance
         public async Task<IActionResult> Index()
         {
-            var attendance =
-                await _attendanceRepository.GetAllAttendancesAsync();
+            try
+            {
+                var attendance =
+                    await _attendanceRepository
+                        .GetAllAttendancesAsync();
 
-            return View(attendance);
+                return View(attendance);
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] =
+                    "Something went wrong while loading attendance.";
+
+                return View(new List<HRMS.Models.Attendance>());
+            }
         }
     }
 }

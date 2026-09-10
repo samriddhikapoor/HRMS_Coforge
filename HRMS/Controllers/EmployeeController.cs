@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using HRMS.Data;
 using HRMS.Models;
 using HRMS.Repositories.Interfaces;
@@ -96,94 +97,93 @@ namespace HRMS.Controllers
                 return View(employeeViewModel);
             }
 
-
-            // =====================================================
-            // CREATE IDENTITY USER
-            // =====================================================
-
-            var user = new ApplicationUser
+            try
             {
-                UserName = employeeViewModel.Email,
-                Email = employeeViewModel.Email,
-                EmailConfirmed = true
-            };
+                // =====================================================
+                // CREATE IDENTITY USER
+                // =====================================================
 
-
-            var userResult =
-                await _userManager.CreateAsync(
-                    user,
-                    employeeViewModel.Password);
-
-
-            if (!userResult.Succeeded)
-            {
-                foreach (var error in userResult.Errors)
+                var user = new ApplicationUser
                 {
-                    ModelState.AddModelError(
-                        string.Empty,
-                        error.Description);
+                    UserName = employeeViewModel.Email,
+                    Email = employeeViewModel.Email,
+                    EmailConfirmed = true
+                };
+
+                var userResult =
+                    await _userManager.CreateAsync(
+                        user,
+                        employeeViewModel.Password);
+
+                if (!userResult.Succeeded)
+                {
+                    foreach (var error in userResult.Errors)
+                    {
+                        ModelState.AddModelError(
+                            string.Empty,
+                            error.Description);
+                    }
+
+                    await LoadDepartmentsAsync(
+                        employeeViewModel.DepartmentId);
+
+                    return View(employeeViewModel);
                 }
+
+
+                // =====================================================
+                // ASSIGN EMPLOYEE ROLE
+                // =====================================================
+
+                var roleResult =
+                    await _userManager.AddToRoleAsync(
+                        user,
+                        "Employee");
+
+                if (!roleResult.Succeeded)
+                {
+                    await _userManager.DeleteAsync(user);
+
+                    foreach (var error in roleResult.Errors)
+                    {
+                        ModelState.AddModelError(
+                            string.Empty,
+                            error.Description);
+                    }
+
+                    await LoadDepartmentsAsync(
+                        employeeViewModel.DepartmentId);
+
+                    return View(employeeViewModel);
+                }
+
+
+                // =====================================================
+                // CREATE EMPLOYEE PROFILE
+                // =====================================================
+
+                var employee =
+                    _mapper.Map<Employee>(
+                        employeeViewModel);
+
+                employee.UserId = user.Id;
+
+                await _employeeRepository
+                    .AddEmployeeAsync(employee);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Something went wrong while creating employee.");
 
                 await LoadDepartmentsAsync(
                     employeeViewModel.DepartmentId);
 
                 return View(employeeViewModel);
             }
-
-
-            // =====================================================
-            // ASSIGN EMPLOYEE ROLE
-            // =====================================================
-
-            var roleResult =
-                await _userManager.AddToRoleAsync(
-                    user,
-                    "Employee");
-
-
-            if (!roleResult.Succeeded)
-            {
-                // If role assignment fails,
-                // delete the Identity user that was just created.
-
-                await _userManager.DeleteAsync(user);
-
-                foreach (var error in roleResult.Errors)
-                {
-                    ModelState.AddModelError(
-                        string.Empty,
-                        error.Description);
-                }
-
-                await LoadDepartmentsAsync(
-                    employeeViewModel.DepartmentId);
-
-                return View(employeeViewModel);
-            }
-
-
-            // =====================================================
-            // CREATE EMPLOYEE PROFILE
-            // =====================================================
-
-            var employee =
-                _mapper.Map<Employee>(
-                    employeeViewModel);
-
-
-            // Link Employee profile with Identity account
-            employee.UserId = user.Id;
-
-
-            await _employeeRepository
-                .AddEmployeeAsync(employee);
-
-
-            // =====================================================
-            // REDIRECT
-            // =====================================================
-
-            return RedirectToAction("Index");
         }
 
 
@@ -228,7 +228,6 @@ namespace HRMS.Controllers
                 return BadRequest();
             }
 
-
             if (!ModelState.IsValid)
             {
                 await LoadDepartmentsAsync(
@@ -237,41 +236,51 @@ namespace HRMS.Controllers
                 return View(employeeViewModel);
             }
 
-
-            var employee =
-                await _employeeRepository
-                    .GetEmployeeByIdAsync(id);
-
-            if (employee == null)
+            try
             {
-                return NotFound();
+                var employee =
+                    await _employeeRepository
+                        .GetEmployeeByIdAsync(id);
+
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+
+                employee.EmployeeName =
+                    employeeViewModel.EmployeeName;
+
+                employee.Email =
+                    employeeViewModel.Email;
+
+                employee.PhoneNumber =
+                    employeeViewModel.PhoneNumber;
+
+                employee.Designation =
+                    employeeViewModel.Designation;
+
+                employee.JoiningDate =
+                    employeeViewModel.JoiningDate;
+
+                employee.DepartmentId =
+                    employeeViewModel.DepartmentId;
+
+                await _employeeRepository
+                    .UpdateEmployeeAsync(employee);
+
+                return RedirectToAction("Index");
             }
+            catch (Exception)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Something went wrong while updating employee.");
 
+                await LoadDepartmentsAsync(
+                    employeeViewModel.DepartmentId);
 
-            employee.EmployeeName =
-                employeeViewModel.EmployeeName;
-
-            employee.Email =
-                employeeViewModel.Email;
-
-            employee.PhoneNumber =
-                employeeViewModel.PhoneNumber;
-
-            employee.Designation =
-                employeeViewModel.Designation;
-
-            employee.JoiningDate =
-                employeeViewModel.JoiningDate;
-
-            employee.DepartmentId =
-                employeeViewModel.DepartmentId;
-
-
-            await _employeeRepository
-                .UpdateEmployeeAsync(employee);
-
-
-            return RedirectToAction("Index");
+                return View(employeeViewModel);
+            }
         }
 
 
@@ -307,10 +316,20 @@ namespace HRMS.Controllers
         public async Task<IActionResult> DeleteConfirmed(
             int id)
         {
-            await _employeeRepository
-                .DeleteEmployeeAsync(id);
+            try
+            {
+                await _employeeRepository
+                    .DeleteEmployeeAsync(id);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] =
+                    "Something went wrong while deleting employee.";
+
+                return RedirectToAction("Index");
+            }
         }
 
 

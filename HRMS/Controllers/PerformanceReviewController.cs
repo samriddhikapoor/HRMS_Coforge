@@ -27,21 +27,41 @@ namespace HRMS.Controllers
         // GET: PerformanceReview
         public async Task<IActionResult> Index()
         {
-            var reviews =
-                await _performanceReviewRepository
-                    .GetAllPerformanceReviewsAsync();
+            try
+            {
+                var reviews =
+                    await _performanceReviewRepository
+                        .GetAllPerformanceReviewsAsync();
 
-            return View(reviews);
+                return View(reviews);
+            }
+            catch (Exception)
+            {
+                TempData["PerformanceMessage"] =
+                    "Something went wrong while loading performance reviews.";
+
+                return View(new List<PerformanceReview>());
+            }
         }
 
         // GET: PerformanceReview/Create
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            ViewBag.Employees =
-                await _employeeRepository.GetEmployeesAsync();
+            try
+            {
+                ViewBag.Employees =
+                    await _employeeRepository.GetEmployeesAsync();
 
-            return View();
+                return View();
+            }
+            catch (Exception)
+            {
+                TempData["PerformanceMessage"] =
+                    "Something went wrong while loading employees.";
+
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: PerformanceReview/Create
@@ -58,51 +78,107 @@ namespace HRMS.Controllers
                 return View(model);
             }
 
-            var review =
-                _mapper.Map<PerformanceReview>(model);
+            try
+            {
+                // Business Rule:
+                // Employee must exist
 
-            await _performanceReviewRepository
-                .AddPerformanceReviewAsync(review);
+                var employee =
+                    await _employeeRepository
+                        .GetEmployeeByIdAsync(model.EmployeeId);
 
-            return RedirectToAction(nameof(Index));
+                if (employee == null)
+                {
+                    ModelState.AddModelError(
+                        "EmployeeId",
+                        "Selected employee does not exist.");
+
+                    ViewBag.Employees =
+                        await _employeeRepository.GetEmployeesAsync();
+
+                    return View(model);
+                }
+
+                var review =
+                    _mapper.Map<PerformanceReview>(model);
+
+                await _performanceReviewRepository
+                    .AddPerformanceReviewAsync(review);
+
+                TempData["PerformanceMessage"] =
+                    "Performance review created successfully.";
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Something went wrong while creating performance review.");
+
+                ViewBag.Employees =
+                    await _employeeRepository.GetEmployeesAsync();
+
+                return View(model);
+            }
         }
 
         // GET: PerformanceReview/Details/5
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
-            var review =
-                await _performanceReviewRepository
-                    .GetPerformanceReviewByIdAsync(id);
-
-            if (review == null)
+            try
             {
-                return NotFound();
-            }
+                var review =
+                    await _performanceReviewRepository
+                        .GetPerformanceReviewByIdAsync(id);
 
-            return View(review);
+                if (review == null)
+                {
+                    return NotFound();
+                }
+
+                return View(review);
+            }
+            catch (Exception)
+            {
+                TempData["PerformanceMessage"] =
+                    "Something went wrong while loading performance details.";
+
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // GET: PerformanceReview/Edit/5
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var review =
-                await _performanceReviewRepository
-                    .GetPerformanceReviewByIdAsync(id);
-
-            if (review == null)
+            try
             {
-                return NotFound();
+                var review =
+                    await _performanceReviewRepository
+                        .GetPerformanceReviewByIdAsync(id);
+
+                if (review == null)
+                {
+                    return NotFound();
+                }
+
+                ViewBag.Employees =
+                    await _employeeRepository.GetEmployeesAsync();
+
+                var model =
+                    _mapper.Map<PerformanceReviewViewModel>(review);
+
+                return View(model);
             }
+            catch (Exception)
+            {
+                TempData["PerformanceMessage"] =
+                    "Something went wrong while loading performance review.";
 
-            ViewBag.Employees =
-                await _employeeRepository.GetEmployeesAsync();
-
-            var model =
-                _mapper.Map<PerformanceReviewViewModel>(review);
-
-            return View(model);
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: PerformanceReview/Edit/5
@@ -125,37 +201,83 @@ namespace HRMS.Controllers
                 return View(model);
             }
 
-            var review =
-                await _performanceReviewRepository
-                    .GetPerformanceReviewByIdAsync(id);
-
-            if (review == null)
+            try
             {
-                return NotFound();
+                // Business Rule:
+                // Employee must exist
+
+                var employee =
+                    await _employeeRepository
+                        .GetEmployeeByIdAsync(model.EmployeeId);
+
+                if (employee == null)
+                {
+                    ModelState.AddModelError(
+                        "EmployeeId",
+                        "Selected employee does not exist.");
+
+                    ViewBag.Employees =
+                        await _employeeRepository.GetEmployeesAsync();
+
+                    return View(model);
+                }
+
+                var review =
+                    await _performanceReviewRepository
+                        .GetPerformanceReviewByIdAsync(id);
+
+                if (review == null)
+                {
+                    return NotFound();
+                }
+
+                _mapper.Map(model, review);
+
+                await _performanceReviewRepository
+                    .UpdatePerformanceReviewAsync(review);
+
+                TempData["PerformanceMessage"] =
+                    "Performance review updated successfully.";
+
+                return RedirectToAction(nameof(Index));
             }
+            catch (Exception)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Something went wrong while updating performance review.");
 
-            _mapper.Map(model, review);
+                ViewBag.Employees =
+                    await _employeeRepository.GetEmployeesAsync();
 
-            await _performanceReviewRepository
-                .UpdatePerformanceReviewAsync(review);
-
-            return RedirectToAction(nameof(Index));
+                return View(model);
+            }
         }
 
         // GET: PerformanceReview/Delete/5
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var review =
-                await _performanceReviewRepository
-                    .GetPerformanceReviewByIdAsync(id);
-
-            if (review == null)
+            try
             {
-                return NotFound();
-            }
+                var review =
+                    await _performanceReviewRepository
+                        .GetPerformanceReviewByIdAsync(id);
 
-            return View(review);
+                if (review == null)
+                {
+                    return NotFound();
+                }
+
+                return View(review);
+            }
+            catch (Exception)
+            {
+                TempData["PerformanceMessage"] =
+                    "Something went wrong while loading performance review.";
+
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         // POST: PerformanceReview/Delete/5
@@ -163,19 +285,32 @@ namespace HRMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var review =
-                await _performanceReviewRepository
-                    .GetPerformanceReviewByIdAsync(id);
-
-            if (review == null)
+            try
             {
-                return NotFound();
+                var review =
+                    await _performanceReviewRepository
+                        .GetPerformanceReviewByIdAsync(id);
+
+                if (review == null)
+                {
+                    return NotFound();
+                }
+
+                await _performanceReviewRepository
+                    .DeletePerformanceReviewAsync(id);
+
+                TempData["PerformanceMessage"] =
+                    "Performance review deleted successfully.";
+
+                return RedirectToAction(nameof(Index));
             }
+            catch (Exception)
+            {
+                TempData["PerformanceMessage"] =
+                    "Something went wrong while deleting performance review.";
 
-            await _performanceReviewRepository
-                .DeletePerformanceReviewAsync(id);
-
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }
